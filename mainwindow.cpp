@@ -92,7 +92,7 @@ MainWindow::MainWindow(QWidget *parent) :
      * code for retrieving all Champ Icons and splash images, runs webscraping python script to download art assets from Riot Games
      *
     QProcess process;
-    QString scriptFile =  "C:/Users/Hanna/Documents/GitHub/LoLStatsQueryV2/queryChampImg.py";
+    QString scriptFile =  "/queryChampImg.py";
     QStringList pythonCommandArguments = QStringList() << scriptFile;
 
     process.setProcessChannelMode(QProcess::MergedChannels);
@@ -119,7 +119,7 @@ void MainWindow::on_pushButton_clicked()
     ui->champList->clear();
     champDataHash.clear();
     champTrie = new trieNode();
-    ofstream clearFile (QDir::currentPath().toStdString() + "/data_parsed.txt"); //C:/Users/Hanna/Documents/GitHub/LoLStatsQueryV2/
+    ofstream clearFile (QDir::currentPath().toStdString() + "/data_parsed.txt"); 
     clearFile.close();
 
 
@@ -128,7 +128,7 @@ void MainWindow::on_pushButton_clicked()
     QString season = ui->SEASONS->currentText();
 
     QProcess process;
-    QString scriptFile =  QDir::currentPath() + "/QueryStats.py"; //C:/Users/Hanna/Documents/GitHub/LoLStatsQueryV2/
+    QString scriptFile =  QDir::currentPath() + "/QueryStats.py"; 
 
     QStringList pythonCommandArguments = QStringList() << scriptFile
          << summonerName  <<  season;
@@ -142,7 +142,7 @@ void MainWindow::on_pushButton_clicked()
 
 
     //handle data parsing
-    ifstream file (QDir::currentPath().toStdString() + "/data_parsed.txt"); //C:/Users/Hanna/Documents/GitHub/LoLStatsQueryV2/
+    ifstream file (QDir::currentPath().toStdString() + "/data_parsed.txt"); 
     champDataHash;
     string champName, champStats;
     string line;
@@ -156,8 +156,8 @@ void MainWindow::on_pushButton_clicked()
         }
     }
     file.close();
-    QString basePath = QDir::currentPath() +  "/champImgsFull/"; //C:/Users/Hanna/Documents/GitHub/LoLStatsQueryV2/
-    QString imgPath = QDir::currentPath() + "/champImgsFull/"; //C:/Users/Hanna/Documents/GitHub/LoLStatsQueryV2/
+    QString basePath = QDir::currentPath() +  "/champImgsFull/"; 
+    QString imgPath = QDir::currentPath() + "/champImgsFull/"; 
     QString fileType = ".png";
     QString c_name;
     QHashIterator<QString, QString> i(champDataHash);
@@ -177,7 +177,7 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_champList_itemClicked(QListWidgetItem *item)
 {
     QString name = item->text();
-    QString imgPath = "background-image: url(" + QDir::currentPath() +  "/champImgsFull/"; //C:/Users/Hanna/Documents/GitHub/LoLStatsQueryV2/
+    QString imgPath = "background-image: url(" + QDir::currentPath() +  "/champImgsFull/"; 
     QString fileType = ".png);";
     QString splashfileType = ".jpg);";
     imgPath.append(name);
@@ -185,7 +185,7 @@ void MainWindow::on_champList_itemClicked(QListWidgetItem *item)
     //ui->champImgIcon->setFrameStyle(QFrame::StyledPanel);
     ui->champImgIcon->setStyleSheet(imgPath);
 
-    QString splashPath = "background-image: url(" + QDir::currentPath() +  "/splashImgs/"; //C:/Users/Hanna/Documents/GitHub/LoLStatsQueryV2/
+    QString splashPath = "background-image: url(" + QDir::currentPath() +  "/splashImgs/"; 
     splashPath.append(name);
     splashPath.append(splashfileType);
     //ui->dataBackground->setFrameStyle(QFrame::StyledPanel);
@@ -229,7 +229,7 @@ void MainWindow::on_pushButton_2_clicked()
 {
    /* char* memblock;
     streampos size;
-    ifstream file ("C:/Users/Hanna/Documents/GitHub/LoLStatsQueryV2/data_parsed.txt", ios::in|ios::ate);
+    ifstream file ("/data_parsed.txt", ios::in|ios::ate);
     if(file.is_open()){
         size = file.tellg();
         memblock = new char [size];
