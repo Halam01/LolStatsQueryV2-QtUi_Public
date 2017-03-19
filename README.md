@@ -19,15 +19,19 @@ Functionality:
   Some Screenshots and Demos:
   
   Main display:
+  
   ![Alt text](/Screenshots/screen1.jpg?raw=true "screen1")
   
   Search History (local cache):
+  
   ![Alt text](/Screenshots/demo3.gif?raw=true "demo2")
   
   Champ List:
+  
   ![Alt text](/Screenshots/demo1.gif?raw=true "demo1")
   
   Search Bar and Autocomplete:
+  
   ![Alt text](/Screenshots/demo2.gif?raw=true "demo2")
   
   
