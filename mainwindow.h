@@ -35,11 +35,18 @@ private slots:
 
     void on_champSearch_textChanged();
 
+    void displayChange();
+
+    void clearDisplay();
+
+    void on_historyBox_activated(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
     QHash<QString, QString> champDataHash;
     trieNode *champTrie;
     QList<QString> *champSearch;
+    QMap<QString, QHash<QString, QString>> searchHistory;
 
 };
 

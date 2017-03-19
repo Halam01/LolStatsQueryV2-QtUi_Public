@@ -21,6 +21,19 @@
 using namespace std;
 
 
+
+//predicate used for parsing
+bool isDelim(char c){
+    switch(c){
+    case ' ':
+    case 39:
+        return true;
+    default:
+        return false;
+    }
+}
+
+
 //inserts trieNode into the trie
 void trieInsert(trieNode *root, QString s){
     for(int i = 0; i < s.size(); i++){
@@ -110,54 +123,23 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_clicked()
+//clears the display, resets datastructures
+void MainWindow::clearDisplay()
 {
-    //reset UI and system state to default
     ui->dataDisplay->clear();
     ui->champImgIcon->setStyleSheet("background-color: rgba(1, 10, 19, 100); border-color: rgb(120, 90, 40); border: 1px solid rgb(120, 90, 40)");
     ui->champNAME->setStyleSheet("font: 48pt 'Narkisim'; background-color: rgba(1, 10, 19, 100); color: rgb(120, 90, 40); border-color: rgb(120, 90, 40); border: 1px solid rgb(120, 90, 40);");
     ui->champList->clear();
     champDataHash.clear();
     champTrie = new trieNode();
-    ofstream clearFile (QDir::currentPath().toStdString() + "/data_parsed.txt"); 
+    ofstream clearFile (QDir::currentPath().toStdString() + "/data_parsed.txt");
     clearFile.close();
 
+}
 
-    //handle search, grabs input from UI and runs python script to query Riot API for player's statistics
-    QString summonerName = ui->SUMMONERNAME->toPlainText();
-    QString season = ui->SEASONS->currentText();
-
-    QProcess process;
-    QString scriptFile =  QDir::currentPath() + "/QueryStats.py"; 
-
-    QStringList pythonCommandArguments = QStringList() << scriptFile
-         << summonerName  <<  season;
-
-    process.setProcessChannelMode(QProcess::MergedChannels);
-    process.start("python", pythonCommandArguments);
-    process.waitForFinished(-1);
-
-    QString output(process.readAllStandardOutput());
-    cout << output.toStdString() << endl;
-
-
-    //handle data parsing
-    ifstream file (QDir::currentPath().toStdString() + "/data_parsed.txt"); 
-    champDataHash;
-    string champName, champStats;
-    string line;
-    if(file.is_open()){
-        while(getline(file, line)){
-            champName = line.substr(0, line.find(" :"));
-            champName.erase(remove_if(champName.begin(), champName.end(), isspace), champName.end());
-            champStats = line.substr(line.find(": ") + 1);
-            champDataHash[QString::fromStdString(champName)] = QString::fromStdString(champStats);
-            trieInsert(champTrie, QString::fromStdString(champName).toLower());
-        }
-    }
-    file.close();
-    QString basePath = QDir::currentPath() +  "/champImgsFull/"; 
-    QString imgPath = QDir::currentPath() + "/champImgsFull/"; 
+void MainWindow::displayChange(){
+    QString basePath = QDir::currentPath() +  "/champImgsFull/";
+    QString imgPath = QDir::currentPath() + "/champImgsFull/";
     QString fileType = ".png";
     QString c_name;
     QHashIterator<QString, QString> i(champDataHash);
@@ -172,12 +154,70 @@ void MainWindow::on_pushButton_clicked()
 
 }
 
+void MainWindow::on_pushButton_clicked()
+{
+    //reset UI and system state to default
+    clearDisplay();
+
+
+    //handle search, grabs input from UI and runs python script to query Riot API for player's statistics
+    QString summonerName = ui->SUMMONERNAME->toPlainText();
+    QString season = ui->SEASONS->currentText();
+    QString ssk = summonerName + season;
+
+    //check if data is already cached, else query API for data
+    if(searchHistory.contains(ssk)){
+        champDataHash = searchHistory[ssk];
+    }
+    else{
+        QProcess process;
+        QString scriptFile =  QDir::currentPath() + "/QueryStats.py";
+
+        QStringList pythonCommandArguments = QStringList() << scriptFile
+             << summonerName  <<  season;
+
+        process.setProcessChannelMode(QProcess::MergedChannels);
+        process.start("python", pythonCommandArguments);
+        process.waitForFinished(-1);
+
+        QString output(process.readAllStandardOutput());
+        cout << output.toStdString() << endl;
+
+
+        //handle data parsing
+        ifstream file (QDir::currentPath().toStdString() + "/data_parsed.txt");
+        champDataHash;
+        string champName, champStats;
+        string line;
+        if(file.is_open()){
+            while(getline(file, line)){
+                champName = line.substr(0, line.find(" :"));
+                champName.erase(remove_if(champName.begin(), champName.end(), &isDelim), champName.end());
+                champStats = line.substr(line.find(": ") + 1);
+                champDataHash[QString::fromStdString(champName)] = QString::fromStdString(champStats);
+                trieInsert(champTrie, QString::fromStdString(champName).toLower());
+            }
+        }
+        file.close();
+
+        //cache data lookup
+        searchHistory[ssk] = champDataHash;
+        ui->historyBox->addItem(ssk);
+
+    }
+
+    //update display
+    displayChange();
+
+
+}
+
 
 //updates statistical data, background image, and champ icon upon selection of a champion from the champion list
 void MainWindow::on_champList_itemClicked(QListWidgetItem *item)
 {
     QString name = item->text();
-    QString imgPath = "background-image: url(" + QDir::currentPath() +  "/champImgsFull/"; 
+    QString imgPath = "background-image: url(" + QDir::currentPath() +  "/champImgsFull/";
     QString fileType = ".png);";
     QString splashfileType = ".jpg);";
     imgPath.append(name);
@@ -185,7 +225,7 @@ void MainWindow::on_champList_itemClicked(QListWidgetItem *item)
     //ui->champImgIcon->setFrameStyle(QFrame::StyledPanel);
     ui->champImgIcon->setStyleSheet(imgPath);
 
-    QString splashPath = "background-image: url(" + QDir::currentPath() +  "/splashImgs/"; 
+    QString splashPath = "background-image: url(" + QDir::currentPath() +  "/splashImgs/";
     splashPath.append(name);
     splashPath.append(splashfileType);
     //ui->dataBackground->setFrameStyle(QFrame::StyledPanel);
@@ -223,6 +263,15 @@ void MainWindow::on_champSearch_textChanged()
 
 }
 
+//grab data from cache, update display
+void MainWindow::on_historyBox_activated(const QString &arg1)
+{
+    clearDisplay();
+    champDataHash = searchHistory[arg1];
+    displayChange();
+}
+
+
 
 //code for debug purposes
 void MainWindow::on_pushButton_2_clicked()
@@ -246,5 +295,10 @@ void MainWindow::on_pushButton_2_clicked()
     }
     */
 }
+
+
+
+
+
 
 

@@ -124,9 +124,9 @@ background-color: rgba(255, 255, 255, 0);</string>
        <colorrole role="Button">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>16</red>
-          <green>23</green>
-          <blue>31</blue>
+          <red>0</red>
+          <green>3</green>
+          <blue>6</blue>
          </color>
         </brush>
        </colorrole>
@@ -151,18 +151,18 @@ background-color: rgba(255, 255, 255, 0);</string>
        <colorrole role="Base">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>16</red>
-          <green>23</green>
-          <blue>31</blue>
+          <red>0</red>
+          <green>3</green>
+          <blue>6</blue>
          </color>
         </brush>
        </colorrole>
        <colorrole role="Window">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>16</red>
-          <green>23</green>
-          <blue>31</blue>
+          <red>0</red>
+          <green>3</green>
+          <blue>6</blue>
          </color>
         </brush>
        </colorrole>
@@ -180,9 +180,9 @@ background-color: rgba(255, 255, 255, 0);</string>
        <colorrole role="Button">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>16</red>
-          <green>23</green>
-          <blue>31</blue>
+          <red>0</red>
+          <green>3</green>
+          <blue>6</blue>
          </color>
         </brush>
        </colorrole>
@@ -207,18 +207,18 @@ background-color: rgba(255, 255, 255, 0);</string>
        <colorrole role="Base">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>16</red>
-          <green>23</green>
-          <blue>31</blue>
+          <red>0</red>
+          <green>3</green>
+          <blue>6</blue>
          </color>
         </brush>
        </colorrole>
        <colorrole role="Window">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>16</red>
-          <green>23</green>
-          <blue>31</blue>
+          <red>0</red>
+          <green>3</green>
+          <blue>6</blue>
          </color>
         </brush>
        </colorrole>
@@ -236,9 +236,9 @@ background-color: rgba(255, 255, 255, 0);</string>
        <colorrole role="Button">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>16</red>
-          <green>23</green>
-          <blue>31</blue>
+          <red>0</red>
+          <green>3</green>
+          <blue>6</blue>
          </color>
         </brush>
        </colorrole>
@@ -263,18 +263,18 @@ background-color: rgba(255, 255, 255, 0);</string>
        <colorrole role="Base">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>16</red>
-          <green>23</green>
-          <blue>31</blue>
+          <red>0</red>
+          <green>3</green>
+          <blue>6</blue>
          </color>
         </brush>
        </colorrole>
        <colorrole role="Window">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>16</red>
-          <green>23</green>
-          <blue>31</blue>
+          <red>0</red>
+          <green>3</green>
+          <blue>6</blue>
          </color>
         </brush>
        </colorrole>
@@ -283,10 +283,10 @@ background-color: rgba(255, 255, 255, 0);</string>
     </property>
     <property name="styleSheet">
      <string notr="true">font: 14pt &quot;Narkisim&quot;;
-background-color: rgb(16, 23, 31);
 border-color: rgb(120, 90, 40);
 color: rgb(125, 124, 114);
 border: 1px solid rgb(120, 90, 40);
+background-color: rgb(0, 3, 6);
 </string>
     </property>
     <item>
@@ -326,7 +326,7 @@ border: 1px solid rgb(120, 90, 40);
     </property>
     <property name="styleSheet">
      <string notr="true">font: 14pt &quot;Narkisim&quot;;
-background-color: rgb(16, 23, 31);
+background-color: rgb(0, 3, 6);
 border-color: rgb(120, 90, 40);
 color: rgb(125, 124, 114);
 border: 1px solid rgb(120, 90, 40);
@@ -519,6 +519,42 @@ color: rgb(120, 90, 40);
      <string>Search Champions</string>
     </property>
    </widget>
+   <widget class="QComboBox" name="historyBox">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>60</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 14pt &quot;Narkisim&quot;;
+border-color: rgb(120, 90, 40);
+color: rgb(125, 124, 114);
+border: 1px solid rgb(120, 90, 40);
+background-color: rgb(0, 3, 6);
+</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>40</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 14pt &quot;Narkisim&quot;;
+color: rgb(120, 90, 40);
+background-color: rgba(255, 255, 255, 0);</string>
+    </property>
+    <property name="text">
+     <string>Past Searches:</string>
+    </property>
+   </widget>
    <zorder>pushButton_2</zorder>
    <zorder>dataBackground</zorder>
    <zorder>overlayBackground</zorder>
@@ -533,6 +569,8 @@ color: rgb(120, 90, 40);
    <zorder>dataDisplay</zorder>
    <zorder>champImgIcon</zorder>
    <zorder>champSearch</zorder>
+   <zorder>historyBox</zorder>
+   <zorder>label_3</zorder>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
