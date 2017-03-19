@@ -10,6 +10,11 @@ Functionality:
   
   The Champion Search bar is implemented using a Trie built ontop of a QtMap. By using this datastructure combined with a simple Depth First Search Algorithm, the search bar will automatically predict what champion you are searching for and narrow down the Champion List accordingly.
   
+ **UPDATE** 3/18/2017:
+  - Added Local Cache to speed up repeat search queries.
+  - Added Search History drop down menu, which pulls past queries from the local cache
+  - Created a predicate function for parsing the string data
+  - added functions for clearing and updating the main display
   Some Screenshots and Demos:
   
   ![Alt text](/Screenshots/screen1.jpg?raw=true "screen1")
