@@ -15,6 +15,7 @@ Functionality:
   - Added Search History drop down menu, which pulls past queries from the local cache
   - Created a predicate function for parsing the string data (now parses spaces and apostrophes in champ names)
   - added functions for clearing and updating the main display
+  
   Some Screenshots and Demos:
   
   ![Alt text](/Screenshots/screen1.jpg?raw=true "screen1")
